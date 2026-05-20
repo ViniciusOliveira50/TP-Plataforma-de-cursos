@@ -21,7 +21,13 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
-                <a href="portal.php" class="btn btn-acessar m-2 fw-bold">Acessar Plataforma →</a>
+                <?php if (!isset($_SESSION['usuario_id'])): ?>
+                    <a href="portal.php" class="btn btn-acessar m-2">Acessar Plataforma →</a>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['usuario_id'])): ?>
+                        <li class="navbar-text text-dark m-2">Olá, <strong><?= htmlspecialchars($_SESSION['usuario_nome']) ?></strong></li>
+                        <a class="nav-link text-danger fw-bold m-2" href="logout.php">Sair</a>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
