@@ -26,7 +26,8 @@
                 <?php endif; ?>
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                         <li class="navbar-text text-dark m-2">Olá, <strong><?= htmlspecialchars($_SESSION['usuario_nome']) ?></strong></li>
-                        <a class="nav-link text-danger fw-bold m-2" href="logout.php">Sair</a>
+                        <li class="navbar-text text-dark m-0"><a class="nav-link text-primary fw-bold ms-2" href="perfil.php">Meu Perfil</a></li>
+                        <li class="navbar-text text-dark m-0"><a class="nav-link text-danger fw-bold" href="logout.php">Sair</a></li>
                 <?php endif; ?>
             </ul>
         </div>
