@@ -5,13 +5,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ? AND senha = ?");
-    $stmt->execute([$email, $senha]);
+    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
+    $stmt->execute([$email]);
     $usuario = $stmt->fetch();
 
-    if ($usuario) {
+    if ($usuario && password_verify($senha, $usuario['senha'])) {
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['usuario_nome'] = $usuario['nome'];
+
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $stmt_log = $pdo->prepare("INSERT INTO logs (usuario_id, evento, endereco_ip) VALUES (?, 'LOGIN', ?)");
+        $stmt_log->execute([$usuario['id'], $ip]);
+
         header("Location: index.php");
         exit;
     } else {
